@@ -8,7 +8,7 @@ $$g(a_1,a_2)=a_1a_2-a_1-a_2.$$
 For $n>2$, Curtis proved in [Cur90] that $a_1,\ldots,a_n$ and $g(a_1,\ldots,a_n)$ are algebraically independent over $\mathbb{C}$, and thus that there is not simple closed formula for $g(a_1,\ldots,a_n)$.
 <br /><br />
 In [Syl84], Sylvester also showed that, for $n=2$, the number of positive integers $g$ for which $(1)$ has no non-negative solutions (denoted $N(a_1,\ldots,a_n)$ in general) is
-$$N(a_1,a_2)=\frac{(a_1-1)(a_2-1)}{2}.$$
+$N(a_1,a_2)=\frac{(a_1-1)(a_2-1)}{2}.$
 ## Included Functionality
 Within this package the following functions are available:
 ### Frobenius Number
@@ -19,9 +19,9 @@ $$N-a_1, N-a_2, \ldots, N-a_n,$$
 are found. The resulting list is then screened for duplicates. Efficiencies can be found by using graph methods that track duplicates during the algorithm and avoid searching already completed branches or branches known to provide no representations.
 ### Sylvester Denumerants
 The Sylvester denumerant function was first investigated by  (and since named after) Sylvester in [Syl57], it is the function
-$$d(m\mid a_1,\ldots,a_n)=\#\left\{(x_1,\ldots,x_n)\in\mathbb{Z}_{\geq0}^n\mid a_1x_1+\cdots+a_nx_n=m\right\},$$
+$d(m\mid a_1,\ldots,a_n)=\#\left\{(x_1,\ldots,x_n)\in\mathbb{Z}_{\geq0}^n\mid a_1x_1+\cdots+a_nx_n=m\right\},$
 that is the number of ways that $m$ can be represented as a non-negative integer combination of $a_1,\ldots,a_n$. The series of denumerants has the following generating function:
-$$\sum_{m=0}^{\infty}d(m\mid a_1,\ldots,a_n)z^m=\prod_{i=1}^{n}\frac{1}{1-z^{a_i}}.$$
+$\sum_{m=0}^{\infty}d(m\mid a_1,\ldots,a_n)z^m=\prod_{i=1}^{n}\frac{1}{1-z^{a_i}}.$
 The denumerant of $m$, therefore, is the $m\mathrm{th}$ coefficient of the generating function. We compute this in the following way:
 - We can express $\frac{1}{1-z^{a_i}}$ as $\sum_{k=0}^{\infty}z^{ka_i}$. Any representation of $m$ as a non-negative integer combination of $a_1,\ldots,a_n$ must contain no more than $\left\lfloor\frac{m}{a_i}\right\rfloor$ copies of $a_i$, and so we can restrict the support to only powers of $z$ that are at most $m$.
 - This gives us $n$ polynomials $\sum_{k=0}^{p_i}z^{ka_i}$ where $p_i=\left\lfloor\frac{m}{a_i}\right\rfloor$, the product of which yields a polynomial where the first $m$ coefficients match the first $m$ coefficients of the generating function for the denumerants. Thus, the denumerant is the $m\mathrm{th}$ coefficient of this polynomial.
