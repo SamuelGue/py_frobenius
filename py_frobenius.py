@@ -72,7 +72,7 @@ class Frobenius:
 
     def denumerant(self, N, up_to_N = False):
         # We use the Cooley-Tukey Fast Fourier Transform (FFT) algorithm to compute the product of polynomials. To compute the denumerant of N, we determine the Nth coefficient of the generating function of the denumerants.
-        def recursive_FFT(a):
+        def recursive_FFT(a, inverse = False):
             # Uses the Fast Fourier Transform to evaluate a polynomial 'a' at the roots of unity
             n = len(a)
 
@@ -80,37 +80,16 @@ class Frobenius:
                 return [a[0]]
 
             theta = -2 * math.pi / n
-            w = list(complex(math.cos(theta * i), math.sin(theta * i)) for i in range(n))
+            if inverse:
+                w = list(complex(math.cos(theta * i), -math.sin(theta * i)) for i in range(n))
+            else:
+                w = list(complex(math.cos(theta * i), math.sin(theta * i)) for i in range(n))
 
             a_E = a[0::2]
             a_O = a[1::2]
 
-            y_E = recursive_FFT(a_E)
-            y_O = recursive_FFT(a_O)
-
-            y = [0] * n
-
-            for k in range(0, n//2):
-                y[k] = y_E[k] + w[k]*y_O[k]
-                y[k+n//2] = y_E[k] - w[k]*y_O[k]
-
-            return y
-
-        def inverse_recursive_FFT(a):
-            # Computes the coefficients of a polynomial with values 'a' at the roots of unity
-            n = len(a)
-
-            if n == 1:
-                return [a[0]]
-
-            theta = -2 * math.pi / n
-            w = list(complex(math.cos(theta * i), -math.sin(theta * i)) for i in range(n))
-
-            a_E = a[0::2]
-            a_O = a[1::2]
-
-            y_E = inverse_recursive_FFT(a_E)
-            y_O = inverse_recursive_FFT(a_O)
+            y_E = recursive_FFT(a_E, inverse=inverse)
+            y_O = recursive_FFT(a_O, inverse=inverse)
 
             y = [0] * n
 
@@ -136,7 +115,7 @@ class Frobenius:
 
             c = [a[i] * b[i] for i in range(N)]
 
-            y = inverse_recursive_FFT(c)
+            y = recursive_FFT(c, inverse=True)
             result = [round(i.real / N) for i in y]
 
             return result[:result_len]
