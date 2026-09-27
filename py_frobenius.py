@@ -140,7 +140,6 @@ class Frobenius:
     def unrepresented(self):
         # Returns all integers that have no representation
         frob = self.frobenius_number()
-        unreps = []
         denumerant_func = self.denumerant(frob+1, up_to_N=True)
         unreps = [i for i in range(0,frob + 1) if denumerant_func[i] == 0]
         return unreps
